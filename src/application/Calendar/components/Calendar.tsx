@@ -3,11 +3,12 @@ import {
   endOfMonth,
   addDays,
   getDaysInMonth,
-  getDate,
   startOfWeek,
   differenceInDays,
 } from "date-fns";
 import { endOfWeek } from "date-fns/esm";
+import { OtherMonthDate } from "./CalendarDate/OtherMonthDate";
+import { CurrentMonthDate } from "./CalendarDate/CurrentMonthDate";
 
 const DateLengthOnWeek = 7;
 
@@ -26,49 +27,20 @@ export function Calendar(props: CalendarProps) {
 
   const currentMonthDates = [...Array(getDaysInMonth(firstMonthDate))].map(
     (_, i) => {
-      const date = addDays(firstMonthDate, i);
-      return (
-        <div
-          style={{
-            height: "10vw",
-          }}
-        >
-          {getDate(date)}
-        </div>
-      );
+      return <CurrentMonthDate date={addDays(firstMonthDate, i)} />;
     }
   );
 
   const previousMonthDates = [
     ...Array(differenceInDays(firstMonthDate, firstCalendarDate)),
   ].map((_, i) => {
-    const date = addDays(firstCalendarDate, i);
-    return (
-      <div
-        style={{
-          color: "gray",
-          height: "10vw",
-        }}
-      >
-        {getDate(date)}
-      </div>
-    );
+    return <OtherMonthDate date={addDays(firstCalendarDate, i)} />;
   });
 
   const followingMonthDates = [
     ...Array(differenceInDays(endCalendarDate, endMonthDate)),
   ].map((_, i) => {
-    const date = addDays(endMonthDate, i + 1);
-    return (
-      <div
-        style={{
-          color: "gray",
-          height: "10vw",
-        }}
-      >
-        {getDate(date)}
-      </div>
-    );
+    return <OtherMonthDate date={addDays(endMonthDate, i + 1)} />;
   });
 
   const dateCells = [

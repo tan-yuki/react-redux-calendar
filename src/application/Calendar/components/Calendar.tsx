@@ -1,52 +1,43 @@
 import React from "react";
+import { CalendarDate as CalendarDateComponent } from "./CalendarDate";
 import {
-  endOfMonth,
-  addDays,
-  getDaysInMonth,
-  startOfWeek,
-  differenceInDays,
-} from "date-fns";
-import { endOfWeek } from "date-fns/esm";
-import { OtherMonthDate } from "./CalendarDate/OtherMonthDate";
-import { CurrentMonthDate } from "./CalendarDate/CurrentMonthDate";
+  CalendarDate,
+  calcCalendarDateList,
+  toString,
+} from "../../../domain/Calendar/CalendarDate";
 
 const DateLengthOnWeek = 7;
 
 export interface CalendarProps {
-  year: number;
-  month: number;
+  calendarDate: CalendarDate;
 }
 
 export function Calendar(props: CalendarProps) {
-  const { year, month } = props;
-  const firstMonthDate = new Date(year, month - 1, 1);
-  const endMonthDate = endOfMonth(firstMonthDate);
-
-  const firstCalendarDate = startOfWeek(firstMonthDate);
-  const endCalendarDate = endOfWeek(endMonthDate);
-
-  const currentMonthDates = [...Array(getDaysInMonth(firstMonthDate))].map(
-    (_, i) => {
-      return <CurrentMonthDate date={addDays(firstMonthDate, i)} />;
-    }
+  const { year, month } = props.calendarDate;
+  const [prevDates, currentDates, followingDates] = calcCalendarDateList(
+    year,
+    month
   );
+  const convertComponent = (isCurrentMonth: boolean) => (
+    calendarDate: CalendarDate
+  ) => {
+    return (
+      <CalendarDateComponent
+        key={toString(calendarDate)}
+        date={calendarDate.date}
+        isCurrentMonth={isCurrentMonth}
+      />
+    );
+  };
 
-  const previousMonthDates = [
-    ...Array(differenceInDays(firstMonthDate, firstCalendarDate)),
-  ].map((_, i) => {
-    return <OtherMonthDate date={addDays(firstCalendarDate, i)} />;
-  });
-
-  const followingMonthDates = [
-    ...Array(differenceInDays(endCalendarDate, endMonthDate)),
-  ].map((_, i) => {
-    return <OtherMonthDate date={addDays(endMonthDate, i + 1)} />;
-  });
+  const previousMonthDates = prevDates.map(convertComponent(false));
+  const currentMonthDates = currentDates.map(convertComponent(true));
+  const followingMonthDates = followingDates.map(convertComponent(false));
 
   const dateCells = [
     ...previousMonthDates,
-    currentMonthDates,
-    followingMonthDates,
+    ...currentMonthDates,
+    ...followingMonthDates,
   ];
 
   return (

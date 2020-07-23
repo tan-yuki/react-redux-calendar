@@ -1,22 +1,82 @@
 import React from "react";
+import {
+  endOfMonth,
+  addDays,
+  getDaysInMonth,
+  getDate,
+  startOfWeek,
+  differenceInDays,
+} from "date-fns";
+import { endOfWeek } from "date-fns/esm";
 
 const DateLengthOnWeek = 7;
 
-const WeekOnMonthArray = [...Array(5)];
-const DateOnWeeksArray = [...Array(DateLengthOnWeek)];
+export interface CalendarProps {
+  year: number;
+  month: number;
+}
 
-export function Calendar() {
-  const dateCells = WeekOnMonthArray.map((_, i) => {
-    return DateOnWeeksArray.map((_, j) => (
+export function Calendar(props: CalendarProps) {
+  const { year, month } = props;
+  const firstMonthDate = new Date(year, month - 1, 1);
+  const endMonthDate = endOfMonth(firstMonthDate);
+
+  const firstCalendarDate = startOfWeek(firstMonthDate);
+  const endCalendarDate = endOfWeek(endMonthDate);
+
+  const currentMonthDates = [...Array(getDaysInMonth(firstMonthDate))].map(
+    (_, i) => {
+      const date = addDays(firstMonthDate, i);
+      return (
+        <div
+          style={{
+            height: "10vw",
+          }}
+        >
+          {getDate(date)}
+        </div>
+      );
+    }
+  );
+
+  const previousMonthDates = [
+    ...Array(differenceInDays(firstMonthDate, firstCalendarDate)),
+  ].map((_, i) => {
+    const date = addDays(firstCalendarDate, i);
+    return (
       <div
         style={{
+          color: "gray",
           height: "10vw",
         }}
       >
-        {i * DateLengthOnWeek + j + 1}
+        {getDate(date)}
       </div>
-    ));
+    );
   });
+
+  const followingMonthDates = [
+    ...Array(differenceInDays(endCalendarDate, endMonthDate)),
+  ].map((_, i) => {
+    const date = addDays(endMonthDate, i + 1);
+    return (
+      <div
+        style={{
+          color: "gray",
+          height: "10vw",
+        }}
+      >
+        {getDate(date)}
+      </div>
+    );
+  });
+
+  const dateCells = [
+    ...previousMonthDates,
+    currentMonthDates,
+    followingMonthDates,
+  ];
+
   return (
     <div
       style={{

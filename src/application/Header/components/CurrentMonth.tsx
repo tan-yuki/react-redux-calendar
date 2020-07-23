@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export function CurrentMonth() {
-  return (
-    <p>2020/08</p>
-  );
+  return <p>2020/07</p>;
 }

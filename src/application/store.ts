@@ -1,8 +1,4 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { createStore } from "redux";
+import { rootReducers } from "./reducers";
 
-export const createApplicationStore = () =>
-  configureStore({
-    reducer: combineReducers({}),
-    devTools: true,
-    middleware: [],
-  });
+export const createApplicationStore = () => createStore(rootReducers);

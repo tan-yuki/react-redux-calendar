@@ -3,7 +3,7 @@ import { CalendarDate as CalendarDateComponent } from "./CalendarDate";
 import {
   CalendarDate,
   calcCalendarDateList,
-  toString,
+  getCalendarDateKey,
 } from "../../../domain/Calendar/CalendarDate";
 
 const DateLengthOnWeek = 7;
@@ -23,7 +23,7 @@ export function Calendar(props: CalendarProps) {
   ) => {
     return (
       <CalendarDateComponent
-        key={toString(calendarDate)}
+        key={getCalendarDateKey(calendarDate)}
         date={calendarDate.date}
         isCurrentMonth={isCurrentMonth}
       />

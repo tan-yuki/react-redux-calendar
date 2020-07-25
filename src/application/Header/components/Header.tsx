@@ -1,7 +1,14 @@
 import React from "react";
 import { CurrentMonth } from "./CurrentMonth";
+import { CalendarDate } from "../../../domain/Calendar/CalendarDate";
 
-export function Header() {
+interface HeaderProps {
+  calendarDate: CalendarDate;
+}
+
+export function Header(props: HeaderProps) {
+  const { calendarDate } = props;
+
   return (
     <div
       style={{
@@ -11,7 +18,7 @@ export function Header() {
       }}
     >
       <p>&lt;</p>
-      <CurrentMonth />
+      <CurrentMonth calendarDate={calendarDate} />
       <p>&gt;</p>
     </div>
   );

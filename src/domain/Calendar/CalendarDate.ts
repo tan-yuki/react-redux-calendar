@@ -16,8 +16,18 @@ export interface CalendarDate {
   date: DomainDate;
 }
 
-export function toString(calendar: CalendarDate) {
+/**
+ * 日付によって一意になる文字列を取得する
+ */
+export function getCalendarDateKey(calendar: CalendarDate) {
   return `${calendar.year}/${calendar.month}/${calendar.date}`;
+}
+
+/**
+ * 現在の月を表すための表示を取得する
+ */
+export function getMonthLabel(calendar: CalendarDate) {
+  return `${calendar.year}/${calendar.month}`;
 }
 
 /**

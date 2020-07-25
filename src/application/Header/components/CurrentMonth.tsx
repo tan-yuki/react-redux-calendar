@@ -1,5 +1,14 @@
 import React from "react";
+import {
+  CalendarDate,
+  getMonthLabel,
+} from "../../../domain/Calendar/CalendarDate";
 
-export function CurrentMonth() {
-  return <p>2020/07</p>;
+interface Props {
+  calendarDate: CalendarDate;
+}
+
+export function CurrentMonth(props: Props) {
+  const { calendarDate } = props;
+  return <p>{getMonthLabel(calendarDate)}</p>;
 }

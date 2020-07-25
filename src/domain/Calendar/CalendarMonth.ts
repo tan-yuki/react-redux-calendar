@@ -28,7 +28,7 @@ type OtherMonthCalendarDate = CalendarDate & {
 export class CalendarMonth {
   private constructor(private year: Year, private month: Month) {}
 
-  toJSBuiltInDate(): Date {
+  private toJSBuiltInDate(): Date {
     // 日付は1日して返す return new Date(
     return new Date(this.year.toNumber(), this.month.toNumber() - 1, 1);
   }

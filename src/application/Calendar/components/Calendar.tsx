@@ -5,8 +5,7 @@ import {
   calcCalendarDateList,
   getCalendarDateKey,
 } from "../../../domain/Calendar/CalendarDate";
-
-const DateLengthOnWeek = 7;
+import { weekDaysLength } from "../../../domain/Date/WeekDay";
 
 export interface CalendarProps {
   calendarDate: CalendarDate;
@@ -49,7 +48,7 @@ export function Calendar(props: CalendarProps) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: [...Array(DateLengthOnWeek)]
+          gridTemplateColumns: [...Array(weekDaysLength)]
             .map(() => "1fr")
             .join(" "),
         }}

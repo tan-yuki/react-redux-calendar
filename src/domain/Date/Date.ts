@@ -6,7 +6,11 @@ function assertDate(x: unknown): asserts x is Date {
   }
 }
 
-export function toDate(n: number): Date {
+export function fromNumberToDate(n: number): Date {
   assertDate(n);
   return n as Date;
+}
+
+export function fromDateToNumber(date: Date): number {
+  return (date as unknown) as number;
 }

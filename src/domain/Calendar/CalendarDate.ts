@@ -1,6 +1,10 @@
-import { Year, toYear } from "../Date/Year";
-import { Month, toMonth } from "../Date/Month";
-import { Date as DomainDate, toDate } from "../Date/Date";
+import { Year, fromYearToNumber, fromNumberToYear } from "../Date/Year";
+import { Month, fromMonthToNumber, fromNumberToMonth } from "../Date/Month";
+import {
+  Date as DomainDate,
+  fromDateToNumber,
+  fromNumberToDate,
+} from "../Date/Date";
 import {
   endOfMonth,
   startOfWeek,
@@ -14,6 +18,22 @@ export interface CalendarDate {
   year: Year;
   month: Month;
   date: DomainDate;
+}
+
+export function now(): CalendarDate {
+  return fromJSBuiltInDate(new Date());
+}
+
+function getFirstMonthDate(year: Year, month: Month): CalendarDate {
+  return { year, month, date: fromNumberToDate(1) };
+}
+
+function toJSBuiltInDate(calendar: CalendarDate): Date {
+  return new Date(
+    fromYearToNumber(calendar.year),
+    fromMonthToNumber(calendar.month) - 1,
+    fromDateToNumber(calendar.date)
+  );
 }
 
 /**
@@ -30,6 +50,14 @@ export function getMonthLabel(calendar: CalendarDate) {
   return `${calendar.year}/${calendar.month}`;
 }
 
+function fromJSBuiltInDate(date: Date): CalendarDate {
+  return {
+    year: fromNumberToYear(date.getFullYear()),
+    month: fromNumberToMonth(date.getMonth() + 1),
+    date: fromNumberToDate(date.getDate()),
+  };
+}
+
 /**
  * 表示しているカレンダー月の日付
  */
@@ -43,14 +71,6 @@ type CurrentMonthCalendarDate = CalendarDate & {
 type OtherMonthCalendarDate = CalendarDate & {
   __otherMonthCalendarDate: never;
 };
-
-export function fromJSBuiltInDate(date: Date): CalendarDate {
-  return {
-    year: toYear(date.getFullYear()),
-    month: toMonth(date.getMonth() + 1),
-    date: toDate(date.getDate()),
-  };
-}
 
 /**
  * 指定した月のカレンダーに表示するべき日付のリストを返却する。
@@ -79,7 +99,7 @@ export function calcCalendarDateList(
   CurrentMonthCalendarDate[],
   OtherMonthCalendarDate[]
 ] {
-  const firstMonthDate = new Date(year, month - 1, 1);
+  const firstMonthDate = toJSBuiltInDate(getFirstMonthDate(year, month));
   const endMonthDate = endOfMonth(firstMonthDate);
 
   const firstCalendarDate = startOfWeek(firstMonthDate);

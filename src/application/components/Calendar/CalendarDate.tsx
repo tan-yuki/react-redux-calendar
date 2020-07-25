@@ -1,13 +1,13 @@
 import React from "react";
-import { Date } from "../../../domain/Date/Date";
+import { CalendarDate as CalendarDateDomain } from "../../../domain/Calendar/CalendarDate";
 
 export interface CalendarDateProps {
-  date: Date;
+  calendarDate: CalendarDateDomain;
   isCurrentMonth: boolean;
 }
 
 export function CalendarDate(props: CalendarDateProps) {
-  const { date, isCurrentMonth } = props;
+  const { calendarDate, isCurrentMonth } = props;
 
   return (
     <div
@@ -16,7 +16,7 @@ export function CalendarDate(props: CalendarDateProps) {
         color: isCurrentMonth ? "black" : "gray",
       }}
     >
-      {date}
+      {calendarDate.getCalendarCellLabel()}
     </div>
   );
 }

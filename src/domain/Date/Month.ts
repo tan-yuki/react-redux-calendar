@@ -1,16 +1,15 @@
-export type Month = unknown & { __month: never };
-
-function assertMonth(x: unknown): asserts x is Month {
-  if (typeof x === "number" && (x < 1 || x > 12)) {
-    throw new Error(`月として不正な値を検出しました: ${x}`);
+export class Month {
+  private constructor(private month: number) {
+    if (month < 1 || month > 12) {
+      throw new Error(`月として不正な値を検出しました: ${month}`);
+    }
   }
-}
 
-export function fromNumberToMonth(n: number): Month {
-  assertMonth(n);
-  return n as Month;
-}
+  static fromNumber(n: number): Month {
+    return new Month(n);
+  }
 
-export function fromMonthToNumber(month: Month): number {
-  return (month as unknown) as number;
+  toNumber(): number {
+    return this.month;
+  }
 }

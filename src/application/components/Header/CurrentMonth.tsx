@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  toString,
-  CalendarMonth,
-} from "../../../domain/Calendar/CalendarMonth";
+import { CalendarMonth } from "../../../domain/Calendar/CalendarMonth";
 
 interface Props {
   calendarMonth: CalendarMonth;
@@ -10,5 +7,5 @@ interface Props {
 
 export function CurrentMonth(props: Props) {
   const { calendarMonth } = props;
-  return <p>{toString(calendarMonth)}</p>;
+  return <p>{calendarMonth.toString()}</p>;
 }

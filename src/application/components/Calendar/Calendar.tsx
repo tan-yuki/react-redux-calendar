@@ -1,14 +1,8 @@
 import React from "react";
 import { CalendarDate as CalendarDateComponent } from "./CalendarDate";
-import {
-  CalendarDate,
-  getCalendarDateKey,
-} from "../../../domain/Calendar/CalendarDate";
+import { CalendarDate } from "../../../domain/Calendar/CalendarDate";
 import { weekDaysLength } from "../../../domain/Date/WeekDay";
-import {
-  CalendarMonth,
-  calcCalendarDateList,
-} from "../../../domain/Calendar/CalendarMonth";
+import { CalendarMonth } from "../../../domain/Calendar/CalendarMonth";
 
 export interface CalendarProps {
   calendarMonth: CalendarMonth;
@@ -16,16 +10,18 @@ export interface CalendarProps {
 
 export function Calendar(props: CalendarProps) {
   const { calendarMonth } = props;
-  const [prevDates, currentDates, followingDates] = calcCalendarDateList(
-    calendarMonth
-  );
+  const [
+    prevDates,
+    currentDates,
+    followingDates,
+  ] = calendarMonth.calcCalendarDateList();
   const convertComponent = (isCurrentMonth: boolean) => (
     calendarDate: CalendarDate
   ) => {
     return (
       <CalendarDateComponent
-        key={getCalendarDateKey(calendarDate)}
-        date={calendarDate.date}
+        key={calendarDate.getUniqueKey()}
+        calendarDate={calendarDate}
         isCurrentMonth={isCurrentMonth}
       />
     );

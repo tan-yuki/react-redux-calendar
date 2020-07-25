@@ -1,16 +1,15 @@
-export type Date = unknown & { __date: never };
-
-function assertDate(x: unknown): asserts x is Date {
-  if (typeof x === "number" && (x < 1 || x > 31)) {
-    throw new Error(`日として不正な値を検出しました: ${x}`);
+export class Date {
+  private constructor(private date: number) {
+    if (date < 1 || date > 31) {
+      throw new Error(`日として不正な値を検出しました: ${date}`);
+    }
   }
-}
 
-export function fromNumberToDate(n: number): Date {
-  assertDate(n);
-  return n as Date;
-}
+  static fromNumber(n: number): Date {
+    return new Date(n);
+  }
 
-export function fromDateToNumber(date: Date): number {
-  return (date as unknown) as number;
+  toNumber(): number {
+    return this.date;
+  }
 }

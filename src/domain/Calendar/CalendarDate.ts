@@ -1,24 +1,31 @@
-import { Year, fromNumberToYear } from "../Date/Year";
-import { Month, fromNumberToMonth } from "../Date/Month";
-import { Date as DomainDate, fromNumberToDate } from "../Date/Date";
+import { Year } from "../Date/Year";
+import { Month } from "../Date/Month";
+import { Date as DomainDate } from "../Date/Date";
 
-export interface CalendarDate {
-  year: Year;
-  month: Month;
-  date: DomainDate;
-}
+export class CalendarDate {
+  private constructor(
+    private year: Year,
+    private month: Month,
+    private date: DomainDate
+  ) {}
 
-/**
- * 日付によって一意になる文字列を取得する
- */
-export function getCalendarDateKey(calendar: CalendarDate) {
-  return `${calendar.year}/${calendar.month}/${calendar.date}`;
-}
+  getUniqueKey(): string {
+    return this.toString();
+  }
 
-export function fromJSBuiltInDateToCalendarDate(date: Date): CalendarDate {
-  return {
-    year: fromNumberToYear(date.getFullYear()),
-    month: fromNumberToMonth(date.getMonth() + 1),
-    date: fromNumberToDate(date.getDate()),
-  };
+  toString(): string {
+    return `${this.year.toNumber()}/${this.month.toNumber()}/${this.date.toNumber()}`;
+  }
+
+  getCalendarCellLabel(): string {
+    return `${this.date.toNumber()}`;
+  }
+
+  static createFromJSBuiltInDate(date: Date): CalendarDate {
+    return new CalendarDate(
+      Year.fromNumber(date.getFullYear()),
+      Month.fromNumber(date.getMonth() + 1),
+      DomainDate.fromNumber(date.getDate())
+    );
+  }
 }

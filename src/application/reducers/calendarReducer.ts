@@ -1,10 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import {
-  CalendarMonth,
-  now,
-  nextMonth,
-  prevMonth,
-} from "../../domain/Calendar/CalendarMonth";
+import { CalendarMonth } from "../../domain/Calendar/CalendarMonth";
 import { moveToNextMonth, moveToPrevtMonth } from "../actions";
 
 interface CalendarState {
@@ -12,17 +7,17 @@ interface CalendarState {
 }
 
 const initialState: CalendarState = {
-  currentMonth: now(),
+  currentMonth: CalendarMonth.now(),
 };
 
 export const calendarReducer = createReducer(initialState, (builder) =>
   builder
     .addCase(moveToNextMonth, (draft, action) => {
       const { currentMonth } = draft;
-      draft.currentMonth = nextMonth(currentMonth);
+      draft.currentMonth = currentMonth.nextMonth();
     })
     .addCase(moveToPrevtMonth, (draft, action) => {
       const { currentMonth } = draft;
-      draft.currentMonth = prevMonth(currentMonth);
+      draft.currentMonth = currentMonth.prevMonth();
     })
 );

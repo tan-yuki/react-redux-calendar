@@ -3,6 +3,7 @@ import { CalendarContainer } from "./Calendar/CalendarContainer";
 import { HeaderContainer } from "./Header/HeaderContainer";
 import { Provider } from "react-redux";
 import { createApplicationStore } from "../store";
+import { CalendarDateEditModalContainer } from "./Modal/CalendarDateEditModal/CalendarDateEditModalContainer";
 
 export function App() {
   const store = createApplicationStore();
@@ -19,6 +20,7 @@ export function App() {
         <HeaderContainer />
         <CalendarContainer />
       </div>
+      <CalendarDateEditModalContainer />
     </Provider>
   );
 }

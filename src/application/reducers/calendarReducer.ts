@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { CalendarMonth } from "../../domain/Calendar/CalendarMonth";
-import { moveToNextMonth, moveToPrevtMonth } from "../actions";
+import { moveToNextMonthAction, moveToPrevtMonthAction } from "../actions";
 
 interface CalendarState {
   currentMonth: CalendarMonth;
@@ -12,11 +12,11 @@ const initialState: CalendarState = {
 
 export const calendarReducer = createReducer(initialState, (builder) =>
   builder
-    .addCase(moveToNextMonth, (draft, action) => {
+    .addCase(moveToNextMonthAction, (draft, action) => {
       const { currentMonth } = draft;
       draft.currentMonth = currentMonth.nextMonth();
     })
-    .addCase(moveToPrevtMonth, (draft, action) => {
+    .addCase(moveToPrevtMonthAction, (draft, action) => {
       const { currentMonth } = draft;
       draft.currentMonth = currentMonth.prevMonth();
     })

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { moveToNextMonth, moveToPrevtMonth } from "../../actions";
+import { moveToNextMonthAction, moveToPrevtMonthAction } from "../../actions";
 import { RootState } from "../../reducers";
 import { Header } from "./Header";
 
@@ -10,10 +10,10 @@ export function HeaderContainer() {
   );
   const dispatch = useDispatch();
   const onClickNextMonth = () => {
-    dispatch(moveToNextMonth());
+    dispatch(moveToNextMonthAction());
   };
   const onClickPrevMonth = () => {
-    dispatch(moveToPrevtMonth());
+    dispatch(moveToPrevtMonthAction());
   };
 
   return (

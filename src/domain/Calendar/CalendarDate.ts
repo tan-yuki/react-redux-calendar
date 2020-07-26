@@ -13,7 +13,7 @@ export class CalendarDate {
     return this.toString();
   }
 
-  private toString(): string {
+  toString(): string {
     return `${this.year.toNumber()}/${this.month.toNumber()}/${this.date.toNumber()}`;
   }
 

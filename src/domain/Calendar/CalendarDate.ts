@@ -1,12 +1,14 @@
 import { Year } from "../Date/Year";
 import { Month } from "../Date/Month";
 import { Date as DomainDate } from "../Date/Date";
+import { Schedule } from "../Schedule/Schedule";
 
 export class CalendarDate {
   private constructor(
     private year: Year,
     private month: Month,
-    private date: DomainDate
+    private date: DomainDate,
+    private schedule: Schedule | null
   ) {}
 
   getUniqueKey(): string {
@@ -25,7 +27,12 @@ export class CalendarDate {
     return new CalendarDate(
       Year.fromNumber(date.getFullYear()),
       Month.fromNumber(date.getMonth() + 1),
-      DomainDate.fromNumber(date.getDate())
+      DomainDate.fromNumber(date.getDate()),
+      null
     );
+  }
+
+  withSchedule(schedule: Schedule) {
+    return new CalendarDate(this.year, this.month, this.date, schedule);
   }
 }

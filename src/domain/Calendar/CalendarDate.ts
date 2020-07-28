@@ -8,7 +8,7 @@ export class CalendarDate {
     private year: Year,
     private month: Month,
     private date: DomainDate,
-    private schedule: Schedule | null
+    private schedule: Schedule
   ) {}
 
   getUniqueKey(): string {
@@ -28,7 +28,7 @@ export class CalendarDate {
       Year.fromNumber(date.getFullYear()),
       Month.fromNumber(date.getMonth() + 1),
       DomainDate.fromNumber(date.getDate()),
-      null
+      Schedule.createEmpty()
     );
   }
 
